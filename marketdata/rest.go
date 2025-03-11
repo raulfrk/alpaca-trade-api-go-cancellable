@@ -2,6 +2,7 @@ package marketdata
 
 import (
 	"compress/gzip"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -42,6 +43,7 @@ type ClientOpts struct {
 	HTTPClient *http.Client
 	// Host used to set the http request's host
 	RequestHost string
+	Ctx         context.Context
 }
 
 // Client is the alpaca marketdata Client.
@@ -1761,6 +1763,7 @@ func GetCorporateActions(req GetCorporateActionsRequest) (CorporateActions, erro
 
 func (c *Client) get(u *url.URL) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
+	req.WithContext(c.opts.Ctx)
 	if err != nil {
 		return nil, err
 	}
