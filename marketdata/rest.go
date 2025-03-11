@@ -1763,7 +1763,7 @@ func GetCorporateActions(req GetCorporateActionsRequest) (CorporateActions, erro
 
 func (c *Client) get(u *url.URL) (*http.Response, error) {
 	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
-	req.WithContext(c.opts.Ctx)
+	req = req.WithContext(c.opts.Ctx)
 	if err != nil {
 		return nil, err
 	}
